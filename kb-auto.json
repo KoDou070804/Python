@@ -1,0 +1,47 @@
+[
+  {
+    "id": 1,
+    "topic": "Python",
+    "title": "input() 的类型转换",
+    "body": "input() 获取的用户输入永远是字符串类型（str），不能直接做数学运算。必须用 int() 或 float() 转换成数字才能计算。",
+    "code": "num1 = int(input(\"请输入第一个数字: \"))\nnum2 = int(input(\"请输入第二个数字: \"))\nprint(f\"{num1} + {num2} = {num1 + num2}\")",
+    "date": "2026/7/8",
+    "source": "claude"
+  },
+  {
+    "id": 2,
+    "topic": "Python",
+    "title": "f-string 格式化输出",
+    "body": "f-string 是 Python 3.6+ 最推荐的格式化方式。在字符串前加 f，用 {} 包裹变量或表达式，比 + 拼接更简洁高效。",
+    "code": "name = \"小明\"\nage = 19\nprint(f\"我是{name}, 今年{age}岁\")\nprint(f\"总和: {a + b}\")",
+    "date": "2026/7/8",
+    "source": "claude"
+  },
+  {
+    "id": 3,
+    "topic": "工具",
+    "title": "GitHub Token 认证推送",
+    "body": "用 Personal Access Token (classic) 代替密码认证。Token 要勾 repo 权限，推送时在远程 URL 中嵌入 token，或配置 credential manager。",
+    "code": "git remote add origin https://用户名:token@github.com/用户名/仓库.git\ngit push -u origin main\n# 配置 credential manager 后后续不用再输密码：\ngit config --global credential.helper manager",
+    "date": "2026/7/10",
+    "source": "claude"
+  },
+  {
+    "id": 5,
+    "topic": "工具",
+    "title": "学习工具架构",
+    "body": "学习计划系统由三部分组成：① planner.html — 每日任务打勾 + 手动笔记 ② planner_server.py — 本地服务器，提供 API 让 Claude 自动写入笔记 ③ kb-auto.json — 由 Claude 自动记录的关键知识点。双击 start_planner.bat 启动服务器后浏览器打开。",
+    "code": "",
+    "date": "2026/7/10",
+    "source": "claude"
+  },
+  {
+    "id": 4,
+    "topic": "导师",
+    "title": "联系导师策略",
+    "body": "本科生联系导师不需要等准备好了再联系。关键是展示态度和学习能力。建议路线：暑假先提升 Python → ML 入门 → 7月底发邮件联系吴飞老师。邮件要诚实说明当前基础 + 正在学的内容 + 想进组学习。",
+    "code": "",
+    "date": "2026/7/10",
+    "source": "claude"
+  }
+]

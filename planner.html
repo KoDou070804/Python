@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>暑期学习计划</title>
+<style>
+:root {
+  --primary: #4f46e5;
+  --primary-light: #818cf8;
+  --primary-dark: #3730a3;
+  --kb-color: #7c3aed;
+  --kb-light: #a78bfa;
+  --bg: #f1f5f9;
+  --card: #ffffff;
+  --text: #1e293b;
+  --muted: #94a3b8;
+  --border: #e2e8f0;
+  --radius: 16px;
+  --shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.04);
+  --shadow-hover: 0 4px 12px rgba(0,0,0,0.06), 0 12px 32px rgba(0,0,0,0.06);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, "PingFang SC", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif;
+  background: var(--bg); color: var(--text); padding: 24px; min-height: 100vh;
+}
+.container { max-width: 680px; margin: 0 auto; }
+
+/* header */
+.header {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  color: #fff; padding: 28px 28px 24px; border-radius: var(--radius);
+  margin-bottom: 20px; position: relative; overflow: hidden;
+}
+.header::after {
+  content: ''; position: absolute; top: -60%; right: -20%;
+  width: 280px; height: 280px; border-radius: 50%;
+  background: rgba(255,255,255,0.05);
+}
+.header h1 { font-size: 22px; font-weight: 700; letter-spacing: 0.5px; position: relative; }
+.header .sub { font-size: 13px; opacity: 0.8; margin-top: 2px; position: relative; }
+.header .goal {
+  font-size: 12px; opacity: 0.65; margin-top: 10px; padding-top: 10px;
+  border-top: 1px solid rgba(255,255,255,0.12); position: relative;
+}
+.progress-wrap { margin-top: 14px; position: relative; }
+.progress-bar { height: 5px; background: rgba(255,255,255,0.18); border-radius: 4px; overflow: hidden; }
+.progress-fill { height: 100%; background: #fff; border-radius: 4px; transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); }
+.progress-text { font-size: 11px; opacity: 0.7; margin-top: 4px; text-align: right; position: relative; }
+
+/* tabs */
+.tabs { display: flex; gap: 6px; margin-bottom: 16px; overflow-x: auto; flex-wrap: wrap; }
+.tab {
+  padding: 8px 18px; border-radius: 20px; border: none; background: var(--card);
+  cursor: pointer; font-size: 13px; font-weight: 500; white-space: nowrap;
+  color: var(--muted); box-shadow: var(--shadow); transition: all 0.2s;
+}
+.tab:hover { color: var(--text); transform: translateY(-1px); }
+.tab.active { background: var(--primary); color: #fff; box-shadow: 0 4px 12px rgba(79,70,229,0.3); }
+.tab.completed { background: #d1fae5; color: #065f46; }
+.tab.knowledge {
+  background: var(--card); color: var(--muted);
+}
+.tab.knowledge:hover { color: var(--kb-color); }
+.tab.knowledge.active { background: var(--kb-color); color: #fff; box-shadow: 0 4px 12px rgba(124,58,237,0.3); }
+
+/* day card */
+.day {
+  background: var(--card); border-radius: var(--radius); padding: 24px;
+  margin-bottom: 12px; box-shadow: var(--shadow); display: none;
+  transition: box-shadow 0.2s;
+}
+.day.active { display: block; }
+.day-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 18px; }
+.day-title { font-size: 18px; font-weight: 700; }
+.day-meta { font-size: 12px; color: var(--muted); margin-top: 3px; }
+.day-progress {
+  background: #f1f5f9; border-radius: 20px; padding: 4px 14px;
+  font-size: 13px; font-weight: 600; color: var(--primary); white-space: nowrap;
+}
+
+/* task list */
+.task { display: flex; align-items: flex-start; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+.task:last-child { border-bottom: none; }
+.task input[type="checkbox"] {
+  margin-top: 3px; width: 20px; height: 20px; cursor: pointer; flex-shrink: 0;
+  accent-color: var(--primary); border-radius: 4px;
+}
+.task-content { flex: 1; min-width: 0; }
+.task-title { font-size: 14px; font-weight: 500; line-height: 1.4; }
+.task-desc { font-size: 12px; color: var(--muted); margin-top: 3px; line-height: 1.4; }
+.task-checked .task-title { text-decoration: line-through; color: #cbd5e1; }
+
+/* notes */
+.notes-area { margin-top: 16px; }
+.notes-label { font-size: 12px; color: var(--muted); margin-bottom: 6px; font-weight: 500; }
+.notes-area textarea {
+  width: 100%; height: 64px; border: 1px solid var(--border); border-radius: 10px;
+  padding: 10px 12px; font-size: 13px; resize: vertical; font-family: inherit;
+  line-height: 1.5; transition: border-color 0.2s;
+}
+.notes-area textarea:focus { outline: none; border-color: var(--primary-light); box-shadow: 0 0 0 3px rgba(79,70,229,0.08); }
+
+/* nav */
+.nav { display: flex; justify-content: space-between; margin-top: 18px; gap: 10px; }
+.nav button {
+  flex: 1; padding: 10px 16px; border: none; border-radius: 10px;
+  font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s;
+}
+.nav button:not(:disabled):active { transform: scale(0.97); }
+.nav .btn-prev { background: var(--border); color: var(--text); }
+.nav .btn-prev:hover:not(:disabled) { background: #cbd5e1; }
+.nav .btn-next { background: var(--primary); color: #fff; }
+.nav .btn-next:hover:not(:disabled) { box-shadow: 0 4px 12px rgba(79,70,229,0.3); }
+.nav button:disabled { opacity: 0.35; cursor: default; }
+
+/* overview */
+.overview { margin-top: 20px; }
+.overview h3 { font-size: 13px; color: var(--muted); margin-bottom: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+.overview-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.stat {
+  background: var(--card); border-radius: 12px; padding: 14px; text-align: center;
+  box-shadow: var(--shadow); transition: transform 0.2s;
+}
+.stat:hover { transform: translateY(-1px); }
+.stat-num { font-size: 26px; font-weight: 800; color: var(--primary); line-height: 1.2; }
+.stat-label { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+/* reset btn */
+.reset-wrap { margin-top: 24px; text-align: center; padding-bottom: 40px; }
+.reset-wrap button {
+  padding: 6px 16px; border: 1px solid var(--border); border-radius: 8px;
+  background: var(--card); color: var(--muted); font-size: 12px; cursor: pointer;
+  transition: all 0.2s;
+}
+.reset-wrap button:hover { border-color: #fca5a5; color: #dc2626; }
+
+/* ===== 知识库 ===== */
+.kb-container { display: none; }
+.kb-container.active { display: block; }
+.kb-header { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+.kb-header input, .kb-header select {
+  padding: 9px 14px; border: 1px solid var(--border); border-radius: 10px;
+  font-size: 13px; background: var(--card); transition: border-color 0.2s;
+}
+.kb-header input { flex: 1; min-width: 140px; }
+.kb-header input:focus, .kb-header select:focus { outline: none; border-color: var(--kb-light); box-shadow: 0 0 0 3px rgba(124,58,237,0.08); }
+.kb-btn {
+  padding: 9px 18px; border: none; border-radius: 10px; font-size: 13px; font-weight: 600;
+  cursor: pointer; background: var(--kb-color); color: #fff; white-space: nowrap; transition: all 0.2s;
+}
+.kb-btn:hover { box-shadow: 0 4px 12px rgba(124,58,237,0.3); transform: translateY(-1px); }
+
+.kb-card {
+  background: var(--card); border-radius: 12px; padding: 18px 20px;
+  margin-bottom: 10px; box-shadow: var(--shadow);
+  border-left: 4px solid var(--kb-color);
+  transition: box-shadow 0.2s;
+}
+.kb-card:hover { box-shadow: var(--shadow-hover); }
+.kb-card.auto { border-left-color: var(--primary); }
+.kb-card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; gap: 8px; }
+.kb-card-title { font-size: 15px; font-weight: 600; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.kb-card-date { font-size: 11px; color: var(--muted); white-space: nowrap; padding-top: 2px; }
+.kb-card-tags { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 8px; }
+.kb-tag {
+  font-size: 11px; padding: 2px 10px; border-radius: 10px;
+  background: #f3e8ff; color: var(--kb-color); font-weight: 500;
+}
+.kb-card-body { font-size: 13px; color: #475569; line-height: 1.7; white-space: pre-wrap; }
+.kb-card-code {
+  background: #f8fafc; border: 1px solid var(--border); border-radius: 8px;
+  padding: 12px; font-size: 12px; font-family: "JetBrains Mono","Consolas","Courier New",monospace;
+  margin-top: 10px; white-space: pre-wrap; overflow-x: auto; line-height: 1.6;
+}
+.kb-card-actions { margin-top: 10px; display: flex; gap: 6px; }
+.kb-card-actions button {
+  padding: 4px 12px; border: 1px solid var(--border); border-radius: 6px;
+  background: var(--card); font-size: 12px; cursor: pointer; transition: all 0.15s;
+}
+.kb-card-actions button:hover { border-color: var(--kb-light); color: var(--kb-color); }
+.auto-badge {
+  font-size: 10px; padding: 1px 8px; border-radius: 8px;
+  background: #eef2ff; color: var(--primary); font-weight: 600;
+}
+.kb-empty { text-align: center; padding: 50px 20px; color: var(--muted); font-size: 14px; }
+
+/* modal */
+.modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15,23,42,0.5); z-index: 1000; padding: 20px; overflow-y: auto; backdrop-filter: blur(4px); }
+.modal.active { display: flex; align-items: flex-start; justify-content: center; padding-top: 50px; }
+.modal-content { background: var(--card); border-radius: 20px; padding: 28px; width: 100%; max-width: 500px; box-shadow: 0 20px 60px rgba(0,0,0,0.15); }
+.modal h2 { font-size: 18px; font-weight: 700; margin-bottom: 18px; }
+.modal label { display: block; font-size: 12px; color: var(--muted); margin-bottom: 5px; margin-top: 14px; font-weight: 500; }
+.modal input, .modal textarea, .modal select {
+  width: 100%; padding: 9px 12px; border: 1px solid var(--border); border-radius: 10px;
+  font-size: 13px; font-family: inherit; transition: border-color 0.2s;
+}
+.modal textarea { min-height: 70px; resize: vertical; }
+.modal input:focus, .modal textarea:focus, .modal select:focus { outline: none; border-color: var(--kb-light); box-shadow: 0 0 0 3px rgba(124,58,237,0.08); }
+.modal-actions { display: flex; gap: 8px; margin-top: 20px; }
+.modal-actions button { flex: 1; padding: 10px; border: none; border-radius: 10px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+.modal-actions .primary { background: var(--kb-color); color: #fff; }
+.modal-actions .primary:hover { box-shadow: 0 4px 12px rgba(124,58,237,0.3); }
+.modal-actions .secondary { background: var(--border); color: var(--text); }
+.modal-actions .secondary:hover { background: #cbd5e1; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>暑期学习计划</h1>
+    <div class="sub">南京邮电大学 · 人工智能 · 准大二</div>
+    <div class="goal">进组目标：吴飞老师 · 多模态数据挖掘 / 内容安全方向</div>
+    <div class="progress-wrap">
+      <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+      <div class="progress-text" id="progressText">0 / 0 任务完成</div>
+    </div>
+  </div>
+
+  <div class="tabs" id="tabs"></div>
+
+  <div id="day-list">
+    <div id="dayContainer"></div>
+  </div>
+
+  <div class="kb-container" id="kbView">
+    <div class="kb-header">
+      <input type="text" id="kbSearch" placeholder="搜索知识库..." oninput="renderKB()">
+      <select id="kbFilter" onchange="renderKB()">
+        <option value="">全部主题</option>
+        <option value="Python">Python</option>
+        <option value="NumPy">NumPy</option>
+        <option value="Matplotlib">Matplotlib</option>
+        <option value="机器学习">机器学习</option>
+        <option value="深度学习">深度学习</option>
+        <option value="PyTorch">PyTorch</option>
+        <option value="论文">论文</option>
+        <option value="导师">导师</option>
+        <option value="其他">其他</option>
+      </select>
+      <button class="kb-btn" onclick="openModal()">+ 记一条</button>
+    </div>
+    <div id="kbList"></div>
+  </div>
+
+  <div class="overview" id="overview">
+    <h3>总进度</h3>
+    <div class="overview-grid">
+      <div class="stat"><div class="stat-num" id="totalDays">0</div><div class="stat-label">总天数</div></div>
+      <div class="stat"><div class="stat-num" id="doneDays">0</div><div class="stat-label">已完成天</div></div>
+      <div class="stat"><div class="stat-num" id="totalTasks">0</div><div class="stat-label">总任务</div></div>
+      <div class="stat"><div class="stat-num" id="doneTasks">0</div><div class="stat-label">已完成</div></div>
+    </div>
+  </div>
+
+  <div class="reset-wrap">
+    <button onclick="resetAll()">重置所有数据</button>
+  </div>
+</div>
+
+<div class="modal" id="kbModal">
+  <div class="modal-content">
+    <h2 id="modalTitle">记笔记</h2>
+    <label>主题分类</label>
+    <select id="editTopic">
+      <option value="Python">Python</option>
+      <option value="NumPy">NumPy</option>
+      <option value="Matplotlib">Matplotlib</option>
+      <option value="机器学习">机器学习</option>
+      <option value="深度学习">深度学习</option>
+      <option value="PyTorch">PyTorch</option>
+      <option value="论文">论文</option>
+      <option value="导师">导师</option>
+      <option value="其他">其他</option>
+    </select>
+    <label>标题</label>
+    <input type="text" id="editTitle" placeholder="如：input()的类型转换">
+    <label>关键内容</label>
+    <textarea id="editBody" placeholder="学到了什么重点…" rows="4"></textarea>
+    <label>代码 / 示例（可选）</label>
+    <textarea id="editCode" placeholder="代码片段…" rows="3" style="font-family:Consolas,monospace;font-size:12px"></textarea>
+    <div class="modal-actions">
+      <button class="secondary" onclick="closeModal()">取消</button>
+      <button class="primary" id="modalSave" onclick="saveNote()">保存</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const PLAN = [
+  { phase: "Phase 1: Python 抢跑", dates: "7.7 - 7.20", days: [
+    { date: "7.7", title: "Day 1: 变量 · 条件 · 循环", tasks: [
+      { t: "装好环境，跑通第一个 py 文件", d: "PyCharm 新建项目，print(Hello)" },
+      { t: "变量 + 数据类型", d: "数字、字符串、布尔，type() 查看类型" },
+      { t: "if/elif/else 条件判断", d: "写个成绩等级判断" },
+      { t: "for/while 循环", d: "range() 和 累加求和" },
+      { t: "写一个交互式自我介绍", d: "input() + print() + 运算" },
+      { t: "git push 到 GitHub", d: "add → commit → push" }
+    ]},
+    { date: "7.8", title: "Day 2: 列表 · 字典", tasks: [
+      { t: "列表 list", d: "增删改查、切片、遍历" },
+      { t: "字典 dict", d: "键值对、增删改查、遍历" },
+      { t: "元组 tuple + 集合 set", d: "不可变、去重" },
+      { t: "练习：学生成绩管理", d: "用 dict + list 存3个学生的成绩并遍历" }
+    ]},
+    { date: "7.9", title: "Day 3: 函数 · 作用域", tasks: [
+      { t: "def 定义函数", d: "参数、返回值、默认参数" },
+      { t: "变量作用域", d: "全局/局部、global" },
+      { t: "练习：封装成函数", d: "把前两天的逻辑写成函数" }
+    ]},
+    { date: "7.10", title: "Day 4: 文件读写", tasks: [
+      { t: "打开/读取文件", d: "open()、read()、readlines()" },
+      { t: "写入文件", d: "write()、追加模式" },
+      { t: "with 语句", d: "自动关闭文件" },
+      { t: "练习：读取数字文件并统计", d: "求和/平均/最大最小" }
+    ]},
+    { date: "7.11", title: "Day 5: 面向对象", tasks: [
+      { t: "class 定义类", d: "__init__、self、属性" },
+      { t: "方法 + 继承", d: "子类调用父类" },
+      { t: "练习：写一个 Student 类", d: "name/age/score，有打印方法" }
+    ]},
+    { date: "7.12", title: "Day 6: Python 进阶技巧", tasks: [
+      { t: "列表推导式", d: "[x*2 for x in list]" },
+      { t: "lambda 匿名函数", d: "lambda x: x*2" },
+      { t: "map/filter 函数式", d: "map()、filter() 配合 lambda" },
+      { t: "综合练习", d: "用列表推导式处理数据" }
+    ]},
+    { date: "7.13", title: "Day 7: 综合练习日", tasks: [
+      { t: "全部复习一遍", d: "变量→函数→类→文件，过一遍" },
+      { t: "写一个小工具", d: "如：日记本/记账本/成绩统计" },
+      { t: "补漏 + git push", d: "确保前面每天代码都在 GitHub 上" }
+    ]},
+    { date: "7.14", title: "Day 8: NumPy (一)", tasks: [
+      { t: "安装 numpy", d: "pip install numpy" },
+      { t: "创建数组", d: "np.array()、arange()、zeros()、ones()" },
+      { t: "索引和切片", d: "一维/二维的索引方式" }
+    ]},
+    { date: "7.15", title: "Day 9: NumPy (二)", tasks: [
+      { t: "矩阵运算", d: "加减乘除、点积 dot()" },
+      { t: "广播机制", d: "不同形状数组怎么运算" },
+      { t: "统计函数", d: "sum/mean/std/max/min" }
+    ]},
+    { date: "7.16", title: "Day 10: Matplotlib (一)", tasks: [
+      { t: "安装 matplotlib", d: "pip install matplotlib" },
+      { t: "折线图 + 散点图", d: "plot()、scatter()" },
+      { t: "标题/轴标签/图例", d: "title()、xlabel()、legend()" }
+    ]},
+    { date: "7.17", title: "Day 11: Matplotlib (二)", tasks: [
+      { t: "子图 subplot", d: "一张图画多个子图" },
+      { t: "热力图 / 直方图", d: "imshow()、hist()" },
+      { t: "保存图片", d: "savefig()" }
+    ]},
+    { date: "7.18", title: "Day 12: 综合项目", tasks: [
+      { t: "数据生成 + 处理 + 可视化", d: "生成一组数据 → numpy分析 → matplotlib画图" },
+      { t: "整理代码到 GitHub", d: "项目单独一个文件夹" }
+    ]},
+    { date: "7.19-20", title: "弹性复习日", tasks: [
+      { t: "复习前面所有内容", d: "哪里薄弱补哪里" },
+      { t: "整理 GitHub 仓库", d: "确保代码整洁、README 更新" }
+    ]}
+  ]},
+  { phase: "Phase 2: ML 入门 + 联系导师", dates: "7.21 - 7月底", days: [
+    { date: "7.21", title: "ML 理论 (1): 机器学习概览", tasks: [
+      { t: "什么是 ML", d: "监督/无监督/强化学习区别" },
+      { t: "Andrew Ng 课程 Week 1", d: "看视频 + 做笔记" }
+    ]},
+    { date: "7.22", title: "ML 理论 (2): 线性回归", tasks: [
+      { t: "线性回归原理", d: "损失函数、梯度下降直觉" },
+      { t: "Andrew Ng Week 2", d: "一元/多元线性回归" }
+    ]},
+    { date: "7.23", title: "ML 理论 (3): 逻辑回归", tasks: [
+      { t: "逻辑回归 + 分类", d: "Sigmoid、决策边界" },
+      { t: "Andrew Ng Week 3", d: "逻辑回归 + 正则化" }
+    ]},
+    { date: "7.24", title: "编程: sklearn 实战", tasks: [
+      { t: "安装 sklearn", d: "pip install scikit-learn" },
+      { t: "跑一个分类器", d: "用经典数据集（iris）训练" }
+    ]},
+    { date: "7.25", title: "联系导师: 准备材料", tasks: [
+      { t: "调研吴飞老师主页", d: "看他最近3篇论文的标题和摘要" },
+      { t: "写简历", d: "一页PDF：专业/课程/技能/动机" },
+      { t: "写邮件草稿", d: "诚实说明基础 + 表达热情" }
+    ]},
+    { date: "7.26", title: "联系导师: 发出邮件", tasks: [
+      { t: "最终检查邮件", d: "语气是否诚恳、有无错别字" },
+      { t: "发送邮件", d: "wufei_8888@126.com" },
+      { t: "记录到 GitHub", d: "读的论文笔记上传" }
+    ]}
+  ]},
+  { phase: "Phase 3: 深入 + 响应", dates: "8月", days: [
+    { date: "8月", title: "等待/响应 + 持续学习", tasks: [
+      { t: "看导师是否回复", d: "一般1-2周，没回复可跟进" },
+      { t: "继续深度学习", d: "李沐《动手学深度学习》PyTorch篇" },
+      { t: "读吴飞论文", d: "精读1-2篇，做笔记" }
+    ]}
+  ]}
+];
+
+function getData() { try { return JSON.parse(localStorage.getItem('planner')) || {}; } catch(e) { return {}; } }
+function saveData(d) { localStorage.setItem('planner', JSON.stringify(d)); }
+function getDayKey(p, d) { return p+'-'+d; }
+function isTaskDone(p, d, t) { const data = getData(); const k = getDayKey(p, d); return data[k] && data[k].tasks && data[k].tasks[t] === true; }
+function setTaskDone(p, d, t, done) {
+  const data = getData(); const k = getDayKey(p, d);
+  if (!data[k]) data[k] = { tasks: {}, notes: '' };
+  data[k].tasks[t] = done; saveData(data); render();
+}
+function getNotes(p, d) { const data = getData(); const k = getDayKey(p, d); return (data[k] && data[k].notes) || ''; }
+function setNotes(p, d, val) { const data = getData(); const k = getDayKey(p, d); if (!data[k]) data[k] = { tasks: {}, notes: '' }; data[k].notes = val; saveData(data); }
+
+let editingId = null;
+function getKB() { const data = getData(); return data._kb || []; }
+function setKB(kb) { const data = getData(); data._kb = kb; saveData(data); }
+
+function openModal(note) {
+  editingId = note ? note.id : null;
+  document.getElementById('modalTitle').textContent = note ? '编辑笔记' : '记笔记';
+  document.getElementById('editTopic').value = note ? note.topic : 'Python';
+  document.getElementById('editTitle').value = note ? note.title : '';
+  document.getElementById('editBody').value = note ? note.body : '';
+  document.getElementById('editCode').value = note ? note.code : '';
+  document.getElementById('kbModal').classList.add('active');
+}
+function closeModal() { document.getElementById('kbModal').classList.remove('active'); editingId = null; }
+function saveNote() {
+  const topic = document.getElementById('editTopic').value;
+  const title = document.getElementById('editTitle').value.trim();
+  const body = document.getElementById('editBody').value.trim();
+  const code = document.getElementById('editCode').value.trim();
+  if (!title || !body) { alert('标题和内容不能为空'); return; }
+  let kb = getKB();
+  if (editingId) { const idx = kb.findIndex(n => n.id === editingId); if (idx !== -1) { kb[idx].topic = topic; kb[idx].title = title; kb[idx].body = body; kb[idx].code = code; } }
+  else { kb.unshift({ id: Date.now(), topic, title, body, code, date: new Date().toLocaleDateString('zh-CN') }); }
+  setKB(kb); closeModal(); renderKB();
+}
+function deleteNote(id) { if (!confirm('确定删除这条笔记吗？')) return; setKB(getKB().filter(n => n.id !== id)); renderKB(); }
+
+let autoNotes = [];
+async function fetchAutoNotes() { try { const r = await fetch('/api/notes'); autoNotes = await r.json(); } catch(e) { autoNotes = []; } }
+
+function renderKB() {
+  const search = (document.getElementById('kbSearch').value || '').toLowerCase();
+  const filter = document.getElementById('kbFilter').value;
+  let kb = getKB().map(n => ({ ...n, _manual: true }));
+  autoNotes.forEach(n => { if (!kb.find(x => x.id === n.id)) kb.push({ ...n, _manual: false }); });
+  if (filter) kb = kb.filter(n => n.topic === filter);
+  if (search) kb = kb.filter(n => (n.title||'').toLowerCase().includes(search) || (n.body||'').toLowerCase().includes(search));
+  const el = document.getElementById('kbList');
+  if (!kb.length) { el.innerHTML = '<div class="kb-empty"><span style="font-size:36px;display:block;margin-bottom:12px">📝</span>还没有笔记<br>学到什么重点就记下来吧</div>'; return; }
+  el.innerHTML = kb.map(n => {
+    const cls = n._manual ? '' : ' auto';
+    const badge = n._manual ? '' : '<span class="auto-badge">Claude 记录</span>';
+    const actions = n._manual ? `<button onclick='openModal(${JSON.stringify(n).replace(/'/g,"&#39;")})'>编辑</button><button onclick="deleteNote(${n.id})">删除</button>` : '';
+    return `<div class="kb-card${cls}"><div class="kb-card-header"><div class="kb-card-title">${escHtml(n.title)}${badge}</div><div class="kb-card-date">${n.date||''}</div></div><div class="kb-card-tags"><span class="kb-tag">${escHtml(n.topic||'')}</span></div><div class="kb-card-body">${escHtml(n.body||'')}</div>${n.code ? `<div class="kb-card-code">${escHtml(n.code)}</div>` : ''}${actions ? `<div class="kb-card-actions">${actions}</div>` : ''}</div>`;
+  }).join('');
+}
+function escHtml(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+let currentPhase = 0, currentDay = 0, view = 'plan';
+
+function render() { if (view === 'kb') { renderPlanTabs(); renderKBView(); } else { renderPlanView(); } }
+
+function renderPlanTabs() {
+  const tabsEl = document.getElementById('tabs'); tabsEl.innerHTML = '';
+  const kbTab = document.createElement('button');
+  kbTab.className = 'tab knowledge' + (view === 'kb' ? ' active' : '');
+  kbTab.textContent = '📚 知识库';
+  kbTab.onclick = () => { view = 'kb'; render(); };
+  tabsEl.appendChild(kbTab);
+  PLAN.forEach((p, pi) => {
+    const tab = document.createElement('button');
+    tab.className = 'tab' + (view === 'plan' && pi === currentPhase ? ' active' : '');
+    tab.textContent = p.phase;
+    let phaseDone = 0, phaseTotal = 0;
+    p.days.forEach((d, di) => { d.tasks.forEach((_, ti) => { phaseTotal++; if (isTaskDone(pi, di, ti)) phaseDone++; }); });
+    if (phaseDone === phaseTotal && phaseTotal > 0) tab.classList.add('completed');
+    tab.onclick = () => { view = 'plan'; currentPhase = pi; currentDay = 0; render(); };
+    tabsEl.appendChild(tab);
+  });
+}
+
+function renderPlanView() {
+  view = 'plan';
+  document.getElementById('day-list').style.display = 'block';
+  document.getElementById('kbView').classList.remove('active');
+  document.getElementById('overview').style.display = 'block';
+  renderPlanTabs();
+  const phase = PLAN[currentPhase];
+  const day = phase.days[currentDay];
+  const container = document.getElementById('dayContainer'); container.innerHTML = '';
+  const dayDiv = document.createElement('div'); dayDiv.className = 'day active';
+  let taskHtml = day.tasks.map((task, ti) => {
+    const checked = isTaskDone(currentPhase, currentDay, ti) ? 'checked' : '';
+    return `<div class="task ${checked ? 'task-checked' : ''}"><input type="checkbox" ${checked} onchange="setTaskDone(${currentPhase},${currentDay},${ti}, this.checked)"><div class="task-content"><div class="task-title">${task.t}</div><div class="task-desc">${task.d}</div></div></div>`;
+  }).join('');
+  dayDiv.innerHTML = `<div class="day-header"><div><div class="day-title">${day.title}</div><div class="day-meta">${phase.phase} · ${day.date}</div></div><div class="day-progress"><span id="taskCount">0/${day.tasks.length}</span></div></div><div id="taskList">${taskHtml}</div><div class="notes-area"><div class="notes-label">笔记 / 心得</div><textarea placeholder="今天学到了什么？遇到什么问题？……" onchange="setNotes(${currentPhase},${currentDay}, this.value)">${getNotes(currentPhase, currentDay)}</textarea></div><div class="nav"><button class="btn-prev" onclick="goDay(-1)" ${currentDay===0?'disabled':''}>← 前一天</button><button class="btn-next" onclick="goDay(1)" ${currentDay>=phase.days.length-1?'disabled':''}>后一天 →</button></div>`;
+  container.appendChild(dayDiv);
+  let done = 0; day.tasks.forEach((_, ti) => { if (isTaskDone(currentPhase, currentDay, ti)) done++; });
+  document.getElementById('taskCount').textContent = done+'/'+day.tasks.length;
+  let tDay=0, tTask=0, dTask=0;
+  PLAN.forEach((p, pi) => { p.days.forEach(d => { tDay++; d.tasks.forEach((_, ti) => { tTask++; if (isTaskDone(pi, tDay-1, ti)) dTask++; }); }); });
+  document.getElementById('totalDays').textContent = tDay;
+  document.getElementById('doneDays').textContent = tDay ? PLAN.reduce((a,p) => a + p.days.length, 0) : 0;
+  document.getElementById('totalTasks').textContent = tTask;
+  document.getElementById('doneTasks').textContent = dTask;
+  document.getElementById('progressFill').style.width = tTask ? (dTask/tTask*100)+'%' : '0%';
+  document.getElementById('progressText').textContent = dTask+' / '+tTask+' 任务完成';
+}
+
+function renderKBView() {
+  view = 'kb';
+  document.getElementById('day-list').style.display = 'none';
+  document.getElementById('kbView').classList.add('active');
+  document.getElementById('overview').style.display = 'none';
+  renderPlanTabs();
+  document.getElementById('kbList').innerHTML = '<div class="kb-empty"><span style="font-size:36px;display:block;margin-bottom:12px">⏳</span>加载中…</div>';
+  fetchAutoNotes().then(() => renderKB());
+}
+
+function goDay(delta) { const phase = PLAN[currentPhase]; const newDay = currentDay + delta; if (newDay < 0 || newDay >= phase.days.length) return; currentDay = newDay; render(); }
+function resetAll() { if (confirm('确定要重置所有数据（任务+知识库）吗？')) { localStorage.removeItem('planner'); render(); } }
+render();
+</script>
+</body>
+</html>
