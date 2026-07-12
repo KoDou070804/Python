@@ -79,5 +79,41 @@
     "code": "students = [\n    {\"name\": \"张三\", \"score\": 85},\n    {\"name\": \"李四\", \"score\": 92},\n    {\"name\": \"王五\", \"score\": 78}\n]\ntotal = 0\nfor s in students:\n    print(f\"{s['name']}: {s['score']}\")\n    total += s['score']\nprint(f\"平均分: {total / len(students)}\")",
     "date": "2026/7/10",
     "source": "claude"
+  },
+  {
+    "id": 10,
+    "topic": "Python",
+    "title": "def 定义函数",
+    "body": "用 def 关键字定义函数，可以设置默认参数。return 可以返回单个值或多个值（实际返回元组）。函数应该只做一件事，用动词命名。",
+    "code": "# 定义 + 默认参数\ndef power(base, exp=2):\n    return base ** exp\n\n# 多个返回值\ndef stats(a, b, c):\n    total = a + b + c\n    avg = total / 3\n    return total, avg\n\ns, a = stats(80, 90, 85)\nprint(f\"总分: {s}, 平均: {a}\")",
+    "date": "2026/7/12",
+    "source": "claude"
+  },
+  {
+    "id": 11,
+    "topic": "Python",
+    "title": "变量作用域 & global",
+    "body": "函数内部定义的变量是局部变量，外部不可访问。函数内部可以读取全局变量，但修改全局变量需要用 global 声明。参数传递时不可变对象（int/str）按值传递，可变对象（list/dict）按引用传递。",
+    "code": "x = 10  # 全局变量\n\ndef show():\n    y = 5  # 局部变量\n    print(f\"内部: x={x}\")  # 可读全局\n\ncount = 0\ndef add_one():\n    global count\n    count += 1",
+    "date": "2026/7/12",
+    "source": "claude"
+  },
+  {
+    "id": 12,
+    "topic": "Python",
+    "title": "文件读写 with open",
+    "body": "用 with open() as f 自动管理文件关闭。模式：'r' 读、'w' 写（覆盖）、'a' 追加。推荐指定 encoding='utf-8'。读文件时可以 for line in f: 逐行遍历，或用 read() 一次性读全部、readlines() 读成行列表。",
+    "code": "# 推荐写法\nwith open(\"data.txt\", \"r\", encoding=\"utf-8\") as f:\n    for line in f:\n        print(line.strip())\n\n# 写入\nwith open(\"out.txt\", \"w\", encoding=\"utf-8\") as f:\n    f.write(\"hello\\n\")",
+    "date": "2026/7/12",
+    "source": "claude"
+  },
+  {
+    "id": 13,
+    "topic": "Python",
+    "title": "class 面向对象基础",
+    "body": "class 定义类，__init__ 是构造函数，self 指向实例本身。类属性所有实例共享，实例属性每个对象独有。方法第一个参数永远是 self。继承用 class 子类(父类)，super().__init__() 调用父类构造。",
+    "code": "class Student:\n    school = \"南邮\"  # 类属性\n\n    def __init__(self, name, score):\n        self.name = name   # 实例属性\n        self.score = score\n\n    def is_pass(self):\n        return self.score >= 60\n\n# 继承\nclass GoodStudent(Student):\n    def __init__(self, name, score, award):\n        super().__init__(name, score)\n        self.award = award",
+    "date": "2026/7/12",
+    "source": "claude"
   }
 ]
