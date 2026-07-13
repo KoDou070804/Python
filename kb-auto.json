@@ -115,5 +115,32 @@
     "code": "class Student:\n    school = \"南邮\"  # 类属性\n\n    def __init__(self, name, score):\n        self.name = name   # 实例属性\n        self.score = score\n\n    def is_pass(self):\n        return self.score >= 60\n\n# 继承\nclass GoodStudent(Student):\n    def __init__(self, name, score, award):\n        super().__init__(name, score)\n        self.award = award",
     "date": "2026/7/12",
     "source": "claude"
-  }
+  },
+  {
+    "id": 14,
+    "topic": "Python",
+    "title": "列表推导式 list comprehension",
+    "body": "列表推导式用一行代码生成新列表，比 for 循环更简洁高效。基本语法 [表达式 for 变量 in 可迭代对象]，可以加 if 条件筛选。嵌套循环也能用推导式，但超过两层可读性会下降。",
+    "code": "# 基本用法\nsquares = [x**2 for x in range(10)]\n# [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]\n\n# 加条件筛选\nevens = [x for x in range(20) if x % 2 == 0]\n# [0, 2, 4, 6, 8, 10, 12, 14, 16, 18]\n\n# 嵌套循环\npairs = [(x, y) for x in range(3) for y in range(3)]\n# [(0,0), (0,1), (0,2), (1,0), (1,1), (1,2), (2,0), (2,1), (2,2)]",
+    "date": "2026/7/13",
+    "source": "claude"
+  },
+  {
+    "id": 15,
+    "topic": "Python",
+    "title": "lambda 匿名函数",
+    "body": "lambda 是一行表达式函数，没有函数名，用 lambda 参数: 返回值 的格式。适合作为参数传给其他函数（如 sorted 的 key 参数）。逻辑复杂时应该用普通 def 函数代替。",
+    "code": "# 基本语法\nsquare = lambda x: x ** 2\nprint(square(5))  # 25\n\n# 实用场景：排序\ndata = [(\"张三\", 85), (\"李四\", 72), (\"王五\", 90)]\nsorted_data = sorted(data, key=lambda s: s[1], reverse=True)\n# [('王五', 90), ('张三', 85), ('李四', 72)]",
+    "date": "2026/7/13",
+    "source": "claude"
+  },
+  {
+    "id": 16,
+    "topic": "Python",
+    "title": "map 和 filter",
+    "body": "map(函数, 可迭代对象) 对每个元素执行函数并返回迭代器，filter(函数, 可迭代对象) 筛选出函数返回 True 的元素。通常配合 lambda 使用。不过列表推导式在很多情况下是更 Pythonic 的替代方案。",
+    "code": "nums = [1, 2, 3, 4, 5, 6]\n\n# map: 每个元素平方\nsquared = list(map(lambda x: x**2, nums))\n# [1, 4, 9, 16, 25, 36]\n\n# filter: 筛选偶数\nevens = list(filter(lambda x: x % 2 == 0, nums))\n# [2, 4, 6]\n\n# ↑ 等价推导式写法\nsquared2 = [x**2 for x in nums]\nevens2 = [x for x in nums if x % 2 == 0]",
+    "date": "2026/7/13",
+    "source": "claude"
+  },
 ]
