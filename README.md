@@ -6,10 +6,10 @@
 
 ## 进度总览
 
-- [x] Week 1 (7/7-7/12)：Python 数据处理基础（numpy + matplotlib + pandas）
-- [ ] Week 2 (7/13-7/19)：PyTorch 入门 + 图像分类
-- [ ] Week 3 (7/20-7/26)：读论文《BMLHF: Balanced Multi-modal Learning with Hierarchical Fusion for Fake News Detection》
-- [ ] Week 4 (7/27-8/2)：准备材料 + 联系导师
+- [x] Week 1 (7/7-7/19)：Python 数据处理基础（numpy ✅ + matplotlib ✅ + pandas 🔜）
+- [ ] Week 2 (7/20-7/26)：PyTorch 入门 + 图像分类
+- [ ] Week 3 (7/27-8/2)：读论文《BMLHF: Balanced Multi-modal Learning with Hierarchical Fusion for Fake News Detection》
+- [ ] Week 4 (8/3-8/9)：准备材料 + 联系导师
 
 ---
 
@@ -25,6 +25,7 @@
 | 7/14 | Python 综合练习：学生成绩管理系统 | ✅ |
 | 7/15 | NumPy (一)：数组创建、索引切片、基本运算 | ✅ |
 | 7/15 | NumPy (二)：矩阵运算、形状操作、随机数 | ✅ |
+| 7/17 | Matplotlib：折线图、散点图、箱线图、直方图、热力图 | ✅ |
 
 ---
 

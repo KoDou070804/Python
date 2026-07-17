@@ -28,7 +28,6 @@ body {
 }
 .container { max-width: 680px; margin: 0 auto; }
 
-/* header */
 .header {
   background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
   color: #fff; padding: 28px 28px 24px; border-radius: var(--radius);
@@ -50,7 +49,6 @@ body {
 .progress-fill { height: 100%; background: #fff; border-radius: 4px; transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); }
 .progress-text { font-size: 11px; opacity: 0.7; margin-top: 4px; text-align: right; position: relative; }
 
-/* tabs */
 .tabs { display: flex; gap: 6px; margin-bottom: 16px; overflow-x: auto; flex-wrap: wrap; }
 .tab {
   padding: 8px 18px; border-radius: 20px; border: none; background: var(--card);
@@ -66,7 +64,6 @@ body {
 .tab.knowledge:hover { color: var(--kb-color); }
 .tab.knowledge.active { background: var(--kb-color); color: #fff; box-shadow: 0 4px 12px rgba(124,58,237,0.3); }
 
-/* day card */
 .day {
   background: var(--card); border-radius: var(--radius); padding: 24px;
   margin-bottom: 12px; box-shadow: var(--shadow); display: none;
@@ -81,7 +78,6 @@ body {
   font-size: 13px; font-weight: 600; color: var(--primary); white-space: nowrap;
 }
 
-/* task list */
 .task { display: flex; align-items: flex-start; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); }
 .task:last-child { border-bottom: none; }
 .task input[type="checkbox"] {
@@ -93,7 +89,6 @@ body {
 .task-desc { font-size: 12px; color: var(--muted); margin-top: 3px; line-height: 1.4; }
 .task-checked .task-title { text-decoration: line-through; color: #cbd5e1; }
 
-/* notes */
 .notes-area { margin-top: 16px; }
 .notes-label { font-size: 12px; color: var(--muted); margin-bottom: 6px; font-weight: 500; }
 .notes-area textarea {
@@ -103,7 +98,6 @@ body {
 }
 .notes-area textarea:focus { outline: none; border-color: var(--primary-light); box-shadow: 0 0 0 3px rgba(79,70,229,0.08); }
 
-/* nav */
 .nav { display: flex; justify-content: space-between; margin-top: 18px; gap: 10px; }
 .nav button {
   flex: 1; padding: 10px 16px; border: none; border-radius: 10px;
@@ -116,7 +110,6 @@ body {
 .nav .btn-next:hover:not(:disabled) { box-shadow: 0 4px 12px rgba(79,70,229,0.3); }
 .nav button:disabled { opacity: 0.35; cursor: default; }
 
-/* overview */
 .overview { margin-top: 20px; }
 .overview h3 { font-size: 13px; color: var(--muted); margin-bottom: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
 .overview-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
@@ -128,7 +121,6 @@ body {
 .stat-num { font-size: 26px; font-weight: 800; color: var(--primary); line-height: 1.2; }
 .stat-label { font-size: 11px; color: var(--muted); margin-top: 2px; }
 
-/* reset btn */
 .reset-wrap { margin-top: 24px; text-align: center; padding-bottom: 40px; }
 .reset-wrap button {
   padding: 6px 16px; border: 1px solid var(--border); border-radius: 8px;
@@ -137,7 +129,6 @@ body {
 }
 .reset-wrap button:hover { border-color: #fca5a5; color: #dc2626; }
 
-/* ===== 知识库 ===== */
 .kb-container { display: none; }
 .kb-container.active { display: block; }
 .kb-header { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
@@ -187,7 +178,6 @@ body {
 }
 .kb-empty { text-align: center; padding: 50px 20px; color: var(--muted); font-size: 14px; }
 
-/* modal */
 .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15,23,42,0.5); z-index: 1000; padding: 20px; overflow-y: auto; backdrop-filter: blur(4px); }
 .modal.active { display: flex; align-items: flex-start; justify-content: center; padding-top: 50px; }
 .modal-content { background: var(--card); border-radius: 20px; padding: 28px; width: 100%; max-width: 500px; box-shadow: 0 20px 60px rgba(0,0,0,0.15); }
@@ -233,8 +223,7 @@ body {
         <option value="Python">Python</option>
         <option value="NumPy">NumPy</option>
         <option value="Matplotlib">Matplotlib</option>
-        <option value="机器学习">机器学习</option>
-        <option value="深度学习">深度学习</option>
+        <option value="Pandas">Pandas</option>
         <option value="PyTorch">PyTorch</option>
         <option value="论文">论文</option>
         <option value="导师">导师</option>
@@ -268,8 +257,7 @@ body {
       <option value="Python">Python</option>
       <option value="NumPy">NumPy</option>
       <option value="Matplotlib">Matplotlib</option>
-      <option value="机器学习">机器学习</option>
-      <option value="深度学习">深度学习</option>
+      <option value="Pandas">Pandas</option>
       <option value="PyTorch">PyTorch</option>
       <option value="论文">论文</option>
       <option value="导师">导师</option>
@@ -290,7 +278,7 @@ body {
 
 <script>
 const PLAN = [
-  { phase: "Phase 1: Python 抢跑", dates: "7.7 - 7.20", days: [
+  { phase: "Week 1: Python 数据处理基础", dates: "7/7 - 7/19", days: [
     { date: "7.7", title: "Day 1: 变量 · 条件 · 循环", tasks: [
       { t: "装好环境，跑通第一个 py 文件", d: "PyCharm 新建项目，print(Hello)" },
       { t: "变量 + 数据类型", d: "数字、字符串、布尔，type() 查看类型" },
@@ -299,101 +287,137 @@ const PLAN = [
       { t: "写一个交互式自我介绍", d: "input() + print() + 运算" },
       { t: "git push 到 GitHub", d: "add → commit → push" }
     ]},
-    { date: "7.8", title: "Day 2: 列表 · 字典", tasks: [
+    { date: "7.10", title: "Day 2: 列表 · 字典 · 元组 · 集合", tasks: [
       { t: "列表 list", d: "增删改查、切片、遍历" },
       { t: "字典 dict", d: "键值对、增删改查、遍历" },
       { t: "元组 tuple + 集合 set", d: "不可变、去重" },
-      { t: "练习：学生成绩管理", d: "用 dict + list 存3个学生的成绩并遍历" }
+      { t: "练习：学生成绩管理", d: "用 dict + list 存储遍历" }
     ]},
-    { date: "7.9", title: "Day 3: 函数 · 作用域", tasks: [
+    { date: "7.12", title: "Day 3-5: 函数 · 文件 · 面向对象", tasks: [
       { t: "def 定义函数", d: "参数、返回值、默认参数" },
-      { t: "变量作用域", d: "全局/局部、global" },
-      { t: "练习：封装成函数", d: "把前两天的逻辑写成函数" }
+      { t: "with 文件读写", d: "open()、read()、write()" },
+      { t: "class 面向对象", d: "__init__、self、继承" }
     ]},
-    { date: "7.10", title: "Day 4: 文件读写", tasks: [
-      { t: "打开/读取文件", d: "open()、read()、readlines()" },
-      { t: "写入文件", d: "write()、追加模式" },
-      { t: "with 语句", d: "自动关闭文件" },
-      { t: "练习：读取数字文件并统计", d: "求和/平均/最大最小" }
-    ]},
-    { date: "7.11", title: "Day 5: 面向对象", tasks: [
-      { t: "class 定义类", d: "__init__、self、属性" },
-      { t: "方法 + 继承", d: "子类调用父类" },
-      { t: "练习：写一个 Student 类", d: "name/age/score，有打印方法" }
-    ]},
-    { date: "7.12", title: "Day 6: Python 进阶技巧", tasks: [
+    { date: "7.13", title: "Day 6: 进阶技巧", tasks: [
       { t: "列表推导式", d: "[x*2 for x in list]" },
-      { t: "lambda 匿名函数", d: "lambda x: x*2" },
-      { t: "map/filter 函数式", d: "map()、filter() 配合 lambda" },
-      { t: "综合练习", d: "用列表推导式处理数据" }
+      { t: "lambda + map/filter", d: "函数式编程" },
+      { t: "装饰器", d: "@ 语法" }
     ]},
-    { date: "7.13", title: "Day 7: 综合练习日", tasks: [
-      { t: "全部复习一遍", d: "变量→函数→类→文件，过一遍" },
-      { t: "写一个小工具", d: "如：日记本/记账本/成绩统计" },
-      { t: "补漏 + git push", d: "确保前面每天代码都在 GitHub 上" }
+    { date: "7.14", title: "Day 7: 综合练习", tasks: [
+      { t: "学生成绩管理系统(升级版)", d: "OOP + 文件 + lambda + 推导式" },
+      { t: "推送 GitHub", d: "整理代码上传" }
     ]},
-    { date: "7.14", title: "Day 8: NumPy (一)", tasks: [
-      { t: "安装 numpy", d: "pip install numpy" },
-      { t: "创建数组", d: "np.array()、arange()、zeros()、ones()" },
-      { t: "索引和切片", d: "一维/二维的索引方式" }
+    { date: "7.15", title: "Day 8-9: NumPy", tasks: [
+      { t: "数组创建 + 索引切片", d: "np.array()、arange()" },
+      { t: "矩阵运算 + 广播", d: "dot、reshape、合并拆分" },
+      { t: "高级索引 + 随机数", d: "where、argmax、seed" }
     ]},
-    { date: "7.15", title: "Day 9: NumPy (二)", tasks: [
-      { t: "矩阵运算", d: "加减乘除、点积 dot()" },
-      { t: "广播机制", d: "不同形状数组怎么运算" },
-      { t: "统计函数", d: "sum/mean/std/max/min" }
-    ]},
-    { date: "7.16", title: "Day 10: Matplotlib (一)", tasks: [
-      { t: "安装 matplotlib", d: "pip install matplotlib" },
+    { date: "7.17", title: "Day 10: Matplotlib", tasks: [
       { t: "折线图 + 散点图", d: "plot()、scatter()" },
-      { t: "标题/轴标签/图例", d: "title()、xlabel()、legend()" }
+      { t: "箱线图 boxplot", d: "多组对比、美化" },
+      { t: "直方图 + 热力图", d: "hist()、imshow()" }
     ]},
-    { date: "7.17", title: "Day 11: Matplotlib (二)", tasks: [
-      { t: "子图 subplot", d: "一张图画多个子图" },
-      { t: "热力图 / 直方图", d: "imshow()、hist()" },
-      { t: "保存图片", d: "savefig()" }
-    ]},
-    { date: "7.18", title: "Day 12: 综合项目", tasks: [
-      { t: "数据生成 + 处理 + 可视化", d: "生成一组数据 → numpy分析 → matplotlib画图" },
-      { t: "整理代码到 GitHub", d: "项目单独一个文件夹" }
-    ]},
-    { date: "7.19-20", title: "弹性复习日", tasks: [
-      { t: "复习前面所有内容", d: "哪里薄弱补哪里" },
-      { t: "整理 GitHub 仓库", d: "确保代码整洁、README 更新" }
+    { date: "7.18-19", title: "Day 11: Pandas 入门", tasks: [
+      { t: "Series + DataFrame", d: "数据结构基础" },
+      { t: "读写 CSV", d: "read_csv()、to_csv()" },
+      { t: "数据筛选/排序/分组", d: "loc、iloc、groupby" },
+      { t: "综合练习", d: "真实数据集分析" }
     ]}
   ]},
-  { phase: "Phase 2: ML 入门 + 联系导师", dates: "7.21 - 7月底", days: [
-    { date: "7.21", title: "ML 理论 (1): 机器学习概览", tasks: [
-      { t: "什么是 ML", d: "监督/无监督/强化学习区别" },
-      { t: "Andrew Ng 课程 Week 1", d: "看视频 + 做笔记" }
+  { phase: "Week 2: PyTorch + 图像分类", dates: "7/20 - 7/26", days: [
+    { date: "7.20", title: "PyTorch 环境 + Tensor", tasks: [
+      { t: "安装 PyTorch", d: "pip install torch torchvision" },
+      { t: "Tensor 基础", d: "创建、类型转换、设备(CPU/GPU)" },
+      { t: "Tensor 运算", d: "形状操作、自动求导" }
     ]},
-    { date: "7.22", title: "ML 理论 (2): 线性回归", tasks: [
-      { t: "线性回归原理", d: "损失函数、梯度下降直觉" },
-      { t: "Andrew Ng Week 2", d: "一元/多元线性回归" }
+    { date: "7.21", title: "自动求导 + 线性回归", tasks: [
+      { t: "Autograd 机制", d: "requires_grad、backward()" },
+      { t: "手动实现线性回归", d: "梯度下降训练" },
+      { t: "nn.Linear + 优化器", d: "用 nn.Module 封装" }
     ]},
-    { date: "7.23", title: "ML 理论 (3): 逻辑回归", tasks: [
-      { t: "逻辑回归 + 分类", d: "Sigmoid、决策边界" },
-      { t: "Andrew Ng Week 3", d: "逻辑回归 + 正则化" }
+    { date: "7.22", title: "分类任务 + 损失函数", tasks: [
+      { t: "逻辑回归 + 交叉熵", d: "nn.CrossEntropyLoss" },
+      { t: "训练循环模板", d: "forward → loss → backward → step" },
+      { t: "准确率评估", d: "预测 vs 真实标签对比" }
     ]},
-    { date: "7.24", title: "编程: sklearn 实战", tasks: [
-      { t: "安装 sklearn", d: "pip install scikit-learn" },
-      { t: "跑一个分类器", d: "用经典数据集（iris）训练" }
+    { date: "7.23", title: "CNN 入门", tasks: [
+      { t: "卷积层 / 池化层", d: "nn.Conv2d、nn.MaxPool2d" },
+      { t: "搭建 CNN", d: "conv → relu → pool → fc" },
+      { t: "特征图尺寸变化", d: "计算每层输出形状" }
     ]},
-    { date: "7.25", title: "联系导师: 准备材料", tasks: [
-      { t: "调研吴飞老师主页", d: "看他最近3篇论文的标题和摘要" },
-      { t: "写简历", d: "一页PDF：专业/课程/技能/动机" },
-      { t: "写邮件草稿", d: "诚实说明基础 + 表达热情" }
+    { date: "7.24", title: "图像分类实战", tasks: [
+      { t: "CIFAR-10 / FashionMNIST", d: "torchvision.datasets" },
+      { t: "DataLoader", d: "batch、shuffle、transform" },
+      { t: "完整训练 + 测试", d: "训练 CNN 并评估准确率" }
     ]},
-    { date: "7.26", title: "联系导师: 发出邮件", tasks: [
-      { t: "最终检查邮件", d: "语气是否诚恳、有无错别字" },
-      { t: "发送邮件", d: "wufei_8888@126.com" },
-      { t: "记录到 GitHub", d: "读的论文笔记上传" }
+    { date: "7.25", title: "模型保存 + TensorBoard", tasks: [
+      { t: "保存/加载模型", d: "torch.save、torch.load" },
+      { t: "TensorBoard", d: "记录 loss 和 accuracy 曲线" },
+      { t: "调参实验", d: "不同 lr / batch_size 对比" }
+    ]},
+    { date: "7.26", title: "综合项目 + 复习", tasks: [
+      { t: "完整分类项目", d: "数据加载到评估完整流程" },
+      { t: "整理 GitHub", d: "加上 README 说明" },
+      { t: "弹性补漏", d: "哪里不熟补哪里" }
     ]}
   ]},
-  { phase: "Phase 3: 深入 + 响应", dates: "8月", days: [
-    { date: "8月", title: "等待/响应 + 持续学习", tasks: [
-      { t: "看导师是否回复", d: "一般1-2周，没回复可跟进" },
-      { t: "继续深度学习", d: "李沐《动手学深度学习》PyTorch篇" },
-      { t: "读吴飞论文", d: "精读1-2篇，做笔记" }
+  { phase: "Week 3: 读论文 BMLHF", dates: "7/27 - 8/2", days: [
+    { date: "7.27", title: "论文基础 + 背景", tasks: [
+      { t: "了解多模态学习", d: "概念、融合方法分类" },
+      { t: "了解假新闻检测", d: "任务定义、常用数据集" },
+      { t: "找 BMLHF 论文", d: "确定原文和引用" }
+    ]},
+    { date: "7.28", title: "摘要 + 引言 + 相关工作", tasks: [
+      { t: "精读 Abstract + Intro", d: "搞清要解决什么问题" },
+      { t: "精读 Related Work", d: "记下关键方法和对比对象" },
+      { t: "做笔记", d: "用自己的话总结每段" }
+    ]},
+    { date: "7.29", title: "方法论详解", tasks: [
+      { t: "精读 Method", d: "搞懂 BMLHF 网络结构" },
+      { t: "画网络结构图", d: "理清各组件关系" },
+      { t: "理解分层融合", d: "Hierarchical Fusion 怎么做" }
+    ]},
+    { date: "7.30", title: "实验 + 结果分析", tasks: [
+      { t: "看懂实验设置", d: "数据集、评价指标" },
+      { t: "分析实验结果", d: "看表格和图的结论" },
+      { t: "消融实验", d: "每个组件贡献了多少" }
+    ]},
+    { date: "7.31", title: "论文复现准备", tasks: [
+      { t: "检查是否开源", d: "GitHub 搜作者代码" },
+      { t: "搭建环境", d: "安装依赖 + 准备数据" },
+      { t: "尝试跑通", d: "能跑出结果即可" }
+    ]},
+    { date: "8.1-2", title: "弹性 + 笔记整理", tasks: [
+      { t: "整理论文笔记", d: "形成自己的理解文档" },
+      { t: "写阅读报告", d: "摘要+方法+实验总结" },
+      { t: "补足积压内容", d: "弹性缓冲时间" }
+    ]}
+  ]},
+  { phase: "Week 4: 联系导师 + 准备材料", dates: "8/3 - 8/9", days: [
+    { date: "8.3", title: "调研吴飞老师", tasks: [
+      { t: "看导师主页", d: "南邮官网 → 研究方向" },
+      { t: "精读1篇导师论文", d: "了解最近关注点" },
+      { t: "整理兴趣点", d: "明确自己想做的方向" }
+    ]},
+    { date: "8.4", title: "准备个人材料", tasks: [
+      { t: "写简历", d: "一页PDF：技能/项目/兴趣" },
+      { t: "整理 GitHub", d: "代码干净、README 更新" },
+      { t: "准备成绩单", d: "如果有需要" }
+    ]},
+    { date: "8.5", title: "撰写邮件", tasks: [
+      { t: "起草邮件", d: "诚实说明基础 + 表达热情" },
+      { t: "附上简历 + GitHub", d: "让老师能了解你" },
+      { t: "征求修改意见", d: "给学长学姐看" }
+    ]},
+    { date: "8.6", title: "发送邮件", tasks: [
+      { t: "最终检查", d: "语气诚恳、无错别字" },
+      { t: "发送", d: "wufei_8888@126.com" },
+      { t: "记录到 GitHub", d: "论文笔记上传" }
+    ]},
+    { date: "8.7-9", title: "等待 + 持续学习", tasks: [
+      { t: "跟进邮件", d: "1周后没回复可礼貌跟进" },
+      { t: "深度学习", d: "李沐《动手学深度学习》" },
+      { t: "准备面试", d: "如果导师约谈" }
     ]}
   ]}
 ];
