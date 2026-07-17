@@ -187,5 +187,32 @@
     "code": "np.random.seed(42)\nnp.random.shuffle(cards)\nnp.random.choice([\"A\",\"B\",\"C\"], size=10, p=[0.5,0.3,0.2])\nnp.random.choice(data, size=5, replace=False)",
     "date": "2026/7/15",
     "source": "claude"
+  },
+  {
+    "id": 22,
+    "topic": "Matplotlib",
+    "title": "箱线图 boxplot",
+    "body": "plt.boxplot(data) 画箱线图，展示数据分布的5个统计量：Q1(下四分位数)、中位数Q2、Q3(上四分位数)、上下边缘（Q1-1.5IQR ~ Q3+1.5IQR）、异常值（圆圈标记）。多组对比用 boxplot([g1, g2, ...], tick_labels=[...])。patch_artist=True 填充颜色，notch=True 显示凹口置信区间，showmeans=True 显示均值标记。vert=False 画水平箱线图。箱线图看不到分布形状，常叠加散点（jitter抖动避免重叠）。",
+    "code": "plt.boxplot(data, tick_labels=[\"A\",\"B\"], patch_artist=True, notch=True, showmeans=True)\n# 叠加散点\nx = np.random.normal(i+1, 0.04, size=len(group))\nplt.scatter(x, group, alpha=0.6)",
+    "date": "2026/7/17",
+    "source": "claude"
+  },
+  {
+    "id": 23,
+    "topic": "Matplotlib",
+    "title": "直方图 hist",
+    "body": "plt.hist(data, bins=N) 画直方图。bins 决定分桶数，alpha 控制透明度做叠加，density=True 显示概率密度而非频数。常配合理论密度曲线一起画来验证分布形态。",
+    "code": "plt.hist(data, bins=30, alpha=0.5, density=True)\nx = np.linspace(-4,4,100)\ny = np.exp(-x**2/2)/np.sqrt(2*np.pi)\nplt.plot(x, y)",
+    "date": "2026/7/17",
+    "source": "claude"
+  },
+  {
+    "id": 24,
+    "topic": "Matplotlib",
+    "title": "热力图 imshow / seaborn heatmap",
+    "body": "plt.imshow(data, cmap=...) 将矩阵映射为颜色，常用于展示相关性矩阵。配合 plt.text() 标注数值。np.corrcoef() 计算相关系数，np.tri() 做遮罩只显示下三角。Seaborn 的 sns.heatmap(annot=True, cmap=..., center=0) 一行搞定带标注的热力图。",
+    "code": "corr = np.corrcoef(features.T)\nplt.imshow(corr, cmap=\"coolwarm\", vmin=-1, vmax=1)\n# vs seaborn\nsns.heatmap(corr, annot=True, cmap=\"coolwarm\", center=0)",
+    "date": "2026/7/17",
+    "source": "claude"
   }
 ]
