@@ -214,5 +214,86 @@
     "code": "corr = np.corrcoef(features.T)\nplt.imshow(corr, cmap=\"coolwarm\", vmin=-1, vmax=1)\n# vs seaborn\nsns.heatmap(corr, annot=True, cmap=\"coolwarm\", center=0)",
     "date": "2026/7/17",
     "source": "claude"
+  },
+  {
+    "id": 25,
+    "topic": "Pandas",
+    "title": "DataFrame 创建与查看",
+    "body": "DataFrame 是二维表格，最常用从字典创建：pd.DataFrame({'列名': [值1, 值2, ...]})。字典的 key 变成列名，value 列表变成列数据。head(n) 查看前n行，info() 查看行列数和每列类型，describe() 查看数值列的统计摘要。",
+    "code": "data = {'姓名': ['张三', '李四'], '数学': [88, 92]}\ndf = pd.DataFrame(data)\nprint(df.head(2))\nprint(df.info())\nprint(df.describe())",
+    "date": "2026/7/21",
+    "source": "claude"
+  },
+  {
+    "id": 26,
+    "topic": "Pandas",
+    "title": "数据选择 iloc / loc / 布尔筛选",
+    "body": "选列：df['列名'] 返回 Series（单列），df[['列1','列2']] 返回 DataFrame（多列）。选行：df.iloc[位置] 按位置（左闭右开），df.loc[行名] 按行名（两端含）。布尔筛选：df[条件] 如 df[df['数学'] > 85]，多条件用 &（与）和 |（或），每个条件加括号。",
+    "code": "df['数学']                     # 单列 Series\ndf[['姓名', '数学']]           # 多列 DataFrame\ndf.iloc[0]                    # 第一行\ndf.loc[0:2]                   # 行名0到2（含2）\ndf[(df['数学']>85) & (df['英语']>80)]",
+    "date": "2026/7/21",
+    "source": "claude"
+  },
+  {
+    "id": 27,
+    "topic": "Pandas",
+    "title": "groupby 分组统计",
+    "body": "df.groupby('列名')['数值列'].统计方法() 按某列分组后计算各组统计量。常用统计方法：mean() 平均、sum() 总和、max() 最大、min() 最小、count() 计数。多列一起算：df.groupby('列名')[['列1','列2']].mean()。",
+    "code": "df.groupby('班级')['数学'].mean()\ndf.groupby('班级')[['数学', '英语']].mean().round(1)",
+    "date": "2026/7/21",
+    "source": "claude"
+  },
+  {
+    "id": 28,
+    "topic": "Pandas",
+    "title": "缺失值处理 dropna / fillna",
+    "body": "数据中 np.nan 表示空值。isnull() 查看哪些位置缺失。dropna() 删除含缺失的行。fillna({'列名': 值}) 填充缺失值，常用策略：数值列填均值/中位数，或填0。CSV 读写用 encoding='utf-8-sig' 避免中文乱码。",
+    "code": "df.isnull()\ndf.dropna()                                               # 删掉含空值的行\ndf.fillna({'数学': df['数学'].mean(), '英语': 0})        # 填空缺失值\ndf.to_csv('out.csv', index=False, encoding='utf-8-sig')\npd.read_csv('out.csv', encoding='utf-8-sig')",
+    "date": "2026/7/21",
+    "source": "claude"
+  },
+  {
+    "id": 29,
+    "topic": "Pandas",
+    "title": "sort_values / apply / lambda",
+    "body": "sort_values('列名', ascending=False) 排序，False 降序。apply(函数) 对每行执行自定义操作，常配合 lambda。新列直接赋值：df['新列'] = ...。axis=0 按列操作（默认），axis=1 按行操作。",
+    "code": "df.sort_values('总分', ascending=False)\ndf['评级'] = df['总分'].apply(lambda x: '优秀' if x >= 170 else '良好')\ndf['总分'] = df['数学'] + df['英语']",
+    "date": "2026/7/21",
+    "source": "claude"
+  },
+  {
+    "id": 30,
+    "topic": "PyTorch",
+    "title": "Tensor 基本概念",
+    "body": "Tensor 是 PyTorch 的数据单元，类似 NumPy 的 ndarray 但支持 GPU 和自动求导。标量=0维，向量=1维，矩阵=2维，N维统一叫张量。shape 属性查看形状（各维度大小）。from_numpy() 从 NumPy 转 Tensor，.numpy() 转回 NumPy。requires_grad=True 开启自动求导。",
+    "code": "t = torch.tensor([[1,2],[3,4]])\nprint(t.shape)  # torch.Size([2, 2])\n\n# 从 NumPy 转\narr = np.array([1,2,3])\nt = torch.from_numpy(arr)\n\n# 开启梯度监控\nx = torch.tensor([2.0], requires_grad=True)",
+    "date": "2026/7/21",
+    "source": "claude"
+  },
+  {
+    "id": 31,
+    "topic": "PyTorch",
+    "title": "自动求导 autograd / backward",
+    "body": "requires_grad=True 的张量会监控所有运算。调用 y.backward() 自动计算 y 对所有相关变量的导数，结果存在 x.grad 中。这是神经网络训练的核心：前向传播算 loss → backward 算梯度 → 优化器按梯度方向调参数。",
+    "code": "x = torch.tensor([3.0], requires_grad=True)\ny = x ** 2  # y = x²\ny.backward()\nprint(x.grad)  # dy/dx = 6 (2*3=6)",
+    "date": "2026/7/21",
+    "source": "claude"
+  },
+  {
+    "id": 32,
+    "topic": "PyTorch",
+    "title": "线性回归训练流程",
+    "body": "PyTorch 训练四步：① 定义模型 nn.Linear(输入维度, 输出维度) ② 定义损失函数 nn.MSELoss() ③ 定义优化器 optim.Adam/SGD ④ 训练循环：pred=model(x) → loss=loss_fn(pred, y) → optimizer.zero_grad() → loss.backward() → optimizer.step()。loss 越小说明猜得越准。",
+    "code": "model = nn.Linear(1, 1)\nloss_fn = nn.MSELoss()\noptimizer = torch.optim.Adam(model.parameters(), lr=0.05)\n\nfor step in range(500):\n    pred = model(x)\n    loss = loss_fn(pred, y_true)\n    optimizer.zero_grad()\n    loss.backward()\n    optimizer.step()",
+    "date": "2026/7/21",
+    "source": "claude"
+  },
+  {
+    "id": 33,
+    "topic": "PyTorch",
+    "title": "损失函数 / 梯度 / 优化器",
+    "body": "损失函数（Loss）衡量模型猜得有多离谱，越小越好。MSELoss = 预测与真实差的平方的平均数。梯度（gradient）告诉参数该调大还是调小：梯度<0 说明参数太小，梯度>0 说明参数太大。optimizer.step() 按梯度方向调参数：新参数 = 旧参数 - 学习率 × 梯度。学习率太大梯度会爆炸（loss→inf→nan），需要选合适的优化器（Adam 比 SGD 更鲁棒）。",
+    "code": "# 梯度方向判断\nloss = (w*x - y_true)**2\nloss.backward()  # w.grad<0 → w太小，要调大\n                 # w.grad>0 → w太大，要调小\n\n# 学习率太大 → loss爆炸\noptimizer = torch.optim.SGD(model.parameters(), lr=0.1)   # 可能炸\noptimizer = torch.optim.Adam(model.parameters(), lr=0.05)  # 更稳定",
+    "date": "2026/7/21",
+    "source": "claude"
   }
 ]
