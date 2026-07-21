@@ -295,5 +295,41 @@
     "code": "# 梯度方向判断\nloss = (w*x - y_true)**2\nloss.backward()  # w.grad<0 → w太小，要调大\n                 # w.grad>0 → w太大，要调小\n\n# 学习率太大 → loss爆炸\noptimizer = torch.optim.SGD(model.parameters(), lr=0.1)   # 可能炸\noptimizer = torch.optim.Adam(model.parameters(), lr=0.05)  # 更稳定",
     "date": "2026/7/21",
     "source": "claude"
+  },
+  {
+    "id": 34,
+    "topic": "PyTorch",
+    "title": "CNN 卷积层 Conv2d",
+    "body": "Conv2d(输入通道, 输出通道, 卷积核大小) 用滑动窗口扫描图片，提取局部特征。输入通道：黑白图=1，彩色RGB=3。输出通道=使用多少个卷积核（检测多少种模式）。卷积核大小常用3×3。卷积后图片尺寸会缩小（kernel_size-1像素）。",
+    "code": "nn.Conv2d(1, 32, 3)   # 黑白图 → 32种特征，3×3窗口\n# 输入：28×28×1 → 输出：26×26×32",
+    "date": "2026/7/22",
+    "source": "claude"
+  },
+  {
+    "id": 35,
+    "topic": "PyTorch",
+    "title": "CNN 池化层 MaxPool2d",
+    "body": "MaxPool2d(池化窗口) 取每个窗口的最大值，把特征图压缩到1/4，保留最强特征。作用是减少计算量、防止过拟合、让模型不关心特征的具体位置。2×2池化最常用。",
+    "code": "nn.MaxPool2d(2)   # 2×2窗口取最大值\n# 输入：26×26 → 输出：13×13",
+    "date": "2026/7/22",
+    "source": "claude"
+  },
+  {
+    "id": 36,
+    "topic": "PyTorch",
+    "title": "CNN 完整结构与数据流向",
+    "body": "CNN = 卷积→激活(ReLU)→池化→...→展平→全连接。数据一步步变换：原图(28×28×1) → 卷积(26×26×32) → 池化(13×13×32) → 卷积(11×11×64) → 池化(5×5×64) → 展平(1600) → Linear(128) → Linear(10)。浅层检测简单模式(横线/竖线)，深层检测复杂模式(圆圈/端点)。",
+    "code": "class CNN(nn.Module):\n    def __init__(self):\n        super().__init__()\n        self.conv_layers = nn.Sequential(\n            nn.Conv2d(1, 32, 3),\n            nn.ReLU(),\n            nn.MaxPool2d(2),\n            nn.Conv2d(32, 64, 3),\n            nn.ReLU(),\n            nn.MaxPool2d(2),\n        )\n        self.classifier = nn.Sequential(\n            nn.Linear(64 * 5 * 5, 128),\n            nn.ReLU(),\n            nn.Linear(128, 10),\n        )\n\n    def forward(self, x):\n        x = self.conv_layers(x)\n        x = x.view(-1, 64 * 5 * 5)\n        x = self.classifier(x)\n        return x",
+    "date": "2026/7/22",
+    "source": "claude"
+  },
+  {
+    "id": 37,
+    "topic": "PyTorch",
+    "title": "CNN 调参实验：通道数 vs 卷积核大小",
+    "body": "通道数=多少人同时看，决定能检测多少种模式。卷积核大小=放大镜大小，决定一次看多大范围。通道数改变必须联动上下层，核大小改变只要最后全连接层尺寸对得上就不用改。实验数据：Conv2d(1,32,3)→98.65%, Conv2d(1,64,3)→98.97%, Conv2d(1,32,5)→99.19%。",
+    "code": "# 改通道：上下层都要变\nself.conv_layers = nn.Sequential(\n    nn.Conv2d(1, 64, 3),   # 32→64\n    nn.ReLU(),\n    nn.MaxPool2d(2),\n    nn.Conv2d(64, 64, 3),  # 32→64，和上层匹配\n    ...\n)\n\n# 改卷积核：只改一处就行\nnn.Conv2d(1, 32, 5),  # 3→5",
+    "date": "2026/7/22",
+    "source": "claude"
   }
 ]
