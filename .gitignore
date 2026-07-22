@@ -10,6 +10,10 @@ students.json
 
 # datasets
 data/
+pytorch/cats_vs_dogs/
+
+# large zip files
+*.zip
 
 # output images
 *.png
